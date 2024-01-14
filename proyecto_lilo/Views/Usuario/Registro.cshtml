@@ -1,0 +1,50 @@
+﻿@using TiendaDeLilo;
+@model Miembro;
+
+<section class="container w-50">
+    <div class="row text-center">
+        <h1>Bienvenido/a a "La tienda de Lilo"</h1>
+        <p>Gracias por su preferencia</p>
+    </div>
+    <form method="post" class="row justify-content-center align-content-center border border-dark rounded mb-3 p-3">
+        <div class="col-6">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" value="@Model?.Nombre" name="Nombre" class="form-control"/>
+        </div>
+
+        <div class ="col-6">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" id="apellido" value="@Model?.Apellido" name="Apellido" class="form-control" />
+        </div>
+
+        <div class="py-1">
+            <label for="fnac" class="form-label">Fecha de Nacimiento:</label>
+            <input type="date" id="fnac" value="@Model?.FechaNacimiento" name="FechaNacimiento" class="form-control" />
+        </div>
+
+        <div class="py-1">
+            <label for="correo" class="form-label">Correo:</label>
+            <input type="text" id="correo" value="@Model?.Correo" name="Correo" class="form-control" />
+        </div>
+
+        <div class="py-1">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input type="password" id="password" name="Contraseña" class="form-control" />
+        </div>
+
+        <div class="py-1">
+            <label for="celular" class="form-label">Celular:</label>
+            <input type="password" id="celular" value="@Model?.NumeroCelular" name="NumeroCelular" class="form-control" />
+        </div>
+
+        <div class="w-100 py-3">
+            <button type="submit" class="btn btn-color w-100">Registrarse</button>
+        </div>
+    </form>
+    @if (ViewData["Error"] != null)
+    {
+        <div class="alert alert-danger py-3">
+            <p >@ViewData["Error"]</p>
+        </div>
+    }
+</section>

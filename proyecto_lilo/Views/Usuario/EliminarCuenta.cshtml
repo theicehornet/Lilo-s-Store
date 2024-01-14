@@ -1,0 +1,25 @@
+﻿<section class="container-fluid w-50">
+    <div class="row text-center">
+        <h1>¿Es un adios?</h1>
+        <p>Esperamos volver a verte</p>
+    </div>
+    <form method="post" class="row justify-content-center align-content-center border border-dark rounded mb-3 p-3 h-100">
+        <div class="py-1">
+            <label for="Confirmacion" class="form-check-label">¿Seguro que desea eliminar su cuenta?</label>
+            <input type="checkbox" id="Confirmacion" name="confirmacion" value="true" check="true" class="form-check-input" />
+        </div>
+        <div class="py-1">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input type="password" id="password" name="passw" class="form-control" />
+        </div>
+        <div class="w-100 py-3">
+            <button type="submit" class="btn btn-color w-100">Eliminar Cuenta</button>
+        </div>
+    </form>
+    @if (ViewData["Error"] != null)
+    {
+        <div class="alert alert-danger py-3">
+            <p>@ViewData["Error"]</p>
+        </div>
+    }
+</section>
