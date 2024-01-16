@@ -8,37 +8,24 @@ namespace TiendaDeLilo
 {
     public class Compra
     {
-        private string _id;
-        private List<Articulo> _articulos;
-        private List<Consola> _consolas;
-        private string _idmiembro;
-        private List<Poster> _posters;
+        private string _idCompra;
+        private Carro _carro;
 
-        public string Id { get { return _id; } }
-        public string IdMiembro { get { return _idmiembro; } set { _idmiembro = value; } }
-        public List<Articulo> Articulos { get { return _articulos; } set { _articulos = value; } }
-        public List<Consola> Consolas { get { return _consolas; } set { _consolas = value; } }
-        public List<Poster> Posters { get { return _posters; } set { _posters = value; } }
+        public string IdCompra { get { return _idCompra; } }
+        public Carro Carro { get { return _carro; } set { _carro = value; } }
 
-        public Compra() { _id = Guid.NewGuid().ToString(); }
+        public Compra() { }
 
-        public Compra(List<Articulo> articulos, List<Consola> consolas, List<Poster> posters, string idMiembro)
+        public Compra(Carro carro)
         {
-            _id = Guid.NewGuid().ToString();
-            Articulos = articulos;
-            Consolas = consolas;
-            Posters = posters;
-            IdMiembro = idMiembro;
+            _carro = carro;
+            _idCompra = Guid.NewGuid().ToString();
         }
 
-        public void Validar() {
-            ValidarIdMiembro();
-        }
-
-        private void ValidarIdMiembro()
+        public decimal PrecioFinal()
         {
-            if (string.IsNullOrEmpty(_idmiembro))
-                throw new Exception("Miembro no logueado/no registrado/no encontrado");
+            return _carro.PrecioDelCarro();
         }
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using TiendaDeLilo
-@model List<Articulo>; 
+@model List<Manga>; 
 @{
     int i = 0;
 }
@@ -8,7 +8,7 @@
         <div>
             <h1>Mangas y Videojuegos</h1>
         </div>
-        @foreach(Articulo art in Model)
+        @foreach(Manga art in Model)
         {
             <article class="col-4 text-start my-5">
                 <h2 class="text-center">@art.Titulo</h2>
@@ -37,7 +37,7 @@
                 </div>
                 <p>Precio: $@art.Precio</p>
                 <p>Stock: @art.Stock</p>
-                <a class="btn btn-color text-decoration-none" href="/Articulo/BuscarArticulo/@art.Id">Ver más</a>
+                <a class="btn btn-color text-decoration-none" href="/Articulo/BuscarManga/@art.Id">Ver más</a>
             </article>
         }
         <article class="col-6 mt-5">

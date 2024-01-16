@@ -7,55 +7,27 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace TiendaDeLilo
 {
-    public class Poster
+    public class Poster : Articulo
     {
-        private string _titulo;
-        private string _imagen;
-        private decimal _precio;
-        private readonly string _id;
-        private int _stock;
+        private bool _esRelevante = true;
 
-        public string Titulo { get { return _titulo; } set { _titulo = value; } }
-        public string Imagen { get { return _imagen; } set { _imagen = value; } }
-        public decimal Precio { get { return _precio; } set { _precio = value; } }
-        public string Id { get { return _id; } }
-        public int Stock { get { return _stock; } set { _stock = value; } }
+        public bool EsRelevante { get { return _esRelevante; } set { _esRelevante = value; } }
 
-        public Poster() => _id = Guid.NewGuid().ToString();
+        public Poster(): base() { }
 
-        public Poster(string titulo, string imagen, decimal precio,int stock)
+        public Poster(string titulo, string autor, int añoPublicacion, decimal precio, int stock, string imagen, string sinopsis, bool esRelevante) : base(titulo, autor, añoPublicacion, precio, stock, imagen, sinopsis)
         {
-            _titulo = titulo;
-            _imagen = imagen;
-            _precio = precio;
-            _stock = stock;
+            _esRelevante = esRelevante;
         }
-
-        public void Validar() 
-        {
-            ValidarTitulo();
-            ValidarImagen();
-        }
-
-        private void ValidarTitulo()
-        {
-            if (string.IsNullOrEmpty(Titulo))
-                throw new Exception("El titulo no puede estar vacío");
-        }
-
-        private void ValidarImagen()
-        {
-            if (string.IsNullOrEmpty(Imagen))
-                throw new Exception("La imagen no puede estar vacío");
-            if (!_imagen.StartsWith("https") && !_imagen.StartsWith("http"))
-                throw new Exception("La imagen debe estar alojada en una url segura");
-
-        }
-
         public override bool Equals(object? obj)
         {
             return obj is Poster other && other.Titulo.Equals(Titulo) && other.Imagen.Equals(Imagen);
         }
 
+        public override void PrecioFinal()
+        {
+            if (_esRelevante)
+                Precio += Precio * (decimal)0.1;
+        }
     }
 }

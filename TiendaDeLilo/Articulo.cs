@@ -15,9 +15,7 @@ namespace TiendaDeLilo
         private readonly string _id;
         private string _titulo;
         private string _autor;
-        private string _imagen;
-        private List<Genero> _generos;
-        private List<Poster> _posters;
+        private string _imagen ;
         private int _añopublicacion;
         private decimal _precio;
         private string _sinopsis;
@@ -30,8 +28,6 @@ namespace TiendaDeLilo
         public string Imagen { get { return _imagen; } set { _imagen = value; } }
         public string Titulo { get { return _titulo; } set { _titulo = value; } }
         public string Autor { get { return _autor; } set { _autor = value; } }
-        public List<Genero> Generos { get { return _generos; } set { _generos = value; } }
-        public List<Poster> Posters { get { return _posters; } set { _posters = value; } } 
         public int AñoPublicacion { get { return _añopublicacion; } set { _añopublicacion = value; } }
         public decimal Precio {  get { return _precio; } set { _precio = value; } }
         public string Sinopsis { get { return _sinopsis; } set { _sinopsis = value; } }
@@ -44,11 +40,9 @@ namespace TiendaDeLilo
             _id = Guid.NewGuid().ToString();
         }
 
-        public Articulo(string titulo,string autor, int añopublicacion, decimal precio, int stock, string imagen, string sinopsis)
+        public Articulo(string titulo="",string autor="", int añopublicacion=0, decimal precio=0, int stock=0, string imagen= "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg", string sinopsis="")
         {
             _id = Guid.NewGuid().ToString();
-            _generos = new List<Genero>();
-            _posters = new List<Poster>();
             _titulo = titulo;
             _autor = autor;
             _precio = precio;
@@ -65,6 +59,29 @@ namespace TiendaDeLilo
             ValidarTitulo();
             ValidarAutor();
             ValidarAño();
+            ValidarPrecio();
+            ValidarStock();
+            ValidarSinopsis();
+        }
+
+        private void ValidarSinopsis()
+        {
+            if (string.IsNullOrEmpty(_sinopsis))
+                throw new Exception("La sinopsis no puede estar vacía!");
+        }
+
+        private void ValidarStock()
+        {
+            if (Stock < 10)
+                throw new Exception("El stock no puede ser menor a 10");
+        }
+
+        private void ValidarPrecio()
+        {
+            if(_precio < 200)
+                throw new Exception("El precio no puede ser menor a $200");
+            if(_precio > 50000)
+                throw new Exception("El precio no puede ser mayor a $5000");
         }
 
         private void ValidarAño()
@@ -91,15 +108,9 @@ namespace TiendaDeLilo
 
         public abstract void PrecioFinal();
 
-        public bool IsPosterInArticulo(Poster p)
-        {
-            return _posters.Contains(p);
-        }
-
         public override bool Equals(object? obj)
         {
-            return obj is Articulo art && art.Titulo.Equals(Titulo) && art.Autor.Equals(Autor);
+            return obj is Articulo art && art.Titulo.Equals(Titulo) && art.Autor.Equals(Autor) && _sinopsis.Equals(art._sinopsis) && _imagen.Equals(art._imagen);
         }
-
     }
 }
