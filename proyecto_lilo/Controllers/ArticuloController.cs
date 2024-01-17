@@ -32,7 +32,7 @@ namespace proyecto_lilo.Controllers
         }
 
         
-        public IActionResult BuscarManga(string id)
+        public IActionResult Manga(string id)
         {
             try
             {
@@ -42,12 +42,54 @@ namespace proyecto_lilo.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(); 
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Mangas"); 
             }
-            
+        }
+        public IActionResult Consola(string id)
+        {
+            try
+            {
+                Consola articulo = sistema.BuscarConsolaPorId(id);
+                ViewData["Title"] = articulo.Titulo;
+                return View(articulo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Consola");
+            }
+        }
+        public IActionResult Videojuego(string id)
+        {
+            try
+            {
+                Videojuego articulo = sistema.BuscarVidejuegoPorId(id);
+                ViewData["Title"] = articulo.Titulo;
+                return View(articulo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Videojuegos");
+            }
+        }
+        public IActionResult Poster(string id)
+        {
+            try
+            {
+                Poster articulo = sistema.BuscarPosterPorId(id);
+                ViewData["Title"] = articulo.Titulo;
+                return View(articulo);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Posters");
+            }
         }
 
-        
+
 
         [HttpPost]
         public IActionResult AgregarArticulo(int cantidad, string correo, string id_art)

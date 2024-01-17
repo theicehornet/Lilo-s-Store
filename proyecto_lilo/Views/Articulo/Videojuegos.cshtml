@@ -1,23 +1,23 @@
 ﻿@using TiendaDeLilo
-@model List<Manga>; 
+@model List<Videojuego>;
 @{
     int i = 0;
 }
 <section id="articulos" class="container">
     <div class="row justify-content-center align-content-center text-center">
         <div>
-            <h1>Mangas</h1>
+            <h1>Videojuegos</h1>
         </div>
         @if (TempData["Error"] != null)
         {
             <p>@TempData["Error"]</p>
         }
-        @foreach(Manga art in Model)
+        @foreach (Videojuego art in Model)
         {
             <article class="col-4 text-start my-5">
                 <h2 class="text-center">@art.Titulo</h2>
                 <figure class="image-article">
-                    <img src="@art.Imagen" alt="imagen de @art.Titulo" class="img-fluid rounded h-100"/>
+                    <img src="@art.Imagen" alt="imagen de @art.Titulo" class="img-fluid rounded h-100" />
                 </figure>
                 <p>Año de publicación: @art.AñoPublicacion</p>
                 <p>Autor: @art.Autor</p>
@@ -39,7 +39,7 @@
                         i = 0;
                     }
                 </div>
-                <a class="btn btn-color text-decoration-none" href="/Articulo/Manga/@art.Id">Ver más</a>
+                <a class="btn btn-color text-decoration-none" href="/Articulo/Videojuego/@art.Id">Ver más</a>
             </article>
         }
     </div>

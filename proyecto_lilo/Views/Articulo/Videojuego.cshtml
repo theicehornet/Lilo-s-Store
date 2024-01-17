@@ -1,0 +1,54 @@
+﻿@using TiendaDeLilo;
+@model Videojuego;
+@{
+    int i = 0;
+}
+<section id="Articulo" class="container text-center">
+    <h1>Videojuego @Model.Titulo</h1>
+    <div class="row align-content-center mt-3">
+        <article class="col-8 row justify-content-start text-start align-content-center">
+            <figure class="col-6 h-50 text-center align-baseline pt-2 ">
+                <img src="@Model.Imagen" alt="imagen de @Model.Titulo" class="image-article img-fluid rounded h-100" />
+            </figure>
+            <div class="d-inline col-6 align-self-center">
+                <p><strong>Año de publicación:</strong> @Model.AñoPublicacion</p>
+                <p><strong>Autor:</strong> @Model.Autor</p>
+                <div class="mb-3">
+                    <p class="d-inline"><strong>Géneros:</strong></p>
+                    @while (i < Model.Generos.Count)
+                    {
+                        if (i == Model.Generos.Count - 1)
+                        {
+                            <p class="d-inline">@Model.Generos[i]</p>
+                        }
+                        else
+                        {
+                            <p class="d-inline">@Model.Generos[i],</p>
+                        }
+                        i++;
+                    }
+                    @{
+                        i = 0;
+                    }
+                </div>
+                <p><strong>Precio:</strong> $@Model.Precio</p>
+                <p><strong>Stock:</strong> @Model.Stock</p>
+            </div>
+            <p>Sinopsis:</p>
+            <p>@Model.Sinopsis</p>
+        </article>
+        <article class="col-4 row justify-content-start text-start align-content-center">
+            <form method="post" action="#" class="align-self-center">
+                <div>
+                    <label for="cant" class="form-label">Cantidad:</label>
+                    <input type="number" id="cant" name="cantidad" class="form-control" />
+                </div>
+                <input type="hidden" name="correo" value="@Context.Session.GetString("Correo")" />
+                <input type="hidden" name="id_art" value="@Model.Id" />
+                <div>
+                    <button type="submit" class="btn btn-color w-100 mt-4">Añadir al carro</button>
+                </div>
+            </form>
+        </article>
+    </div>
+</section>
