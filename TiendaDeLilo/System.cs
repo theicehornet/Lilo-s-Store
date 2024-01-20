@@ -48,12 +48,13 @@ namespace TiendaDeLilo
             _articulos.Add(articulo);
         }
 
-        public void AltaCarro(Usuario autor,string idArticulo,int cantArticulo)
+        public Carro AltaCarro(Usuario autor,string idArticulo,int cantArticulo)
         {
             Carro carro = new Carro(autor);
             Articulo articulo = BuscarArticuloPorId(idArticulo);
             carro.AgregarArticulo(articulo,cantArticulo);
             _carros.Add(carro);
+            return carro;
         }
 
         #endregion

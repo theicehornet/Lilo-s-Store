@@ -20,5 +20,6 @@ namespace TiendaDeLilo
             _articuloElegido = articulo;
             _cantidadArtic = cantidadArtic;
         }
+
     }
 }

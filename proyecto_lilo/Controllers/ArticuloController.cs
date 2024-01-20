@@ -10,15 +10,23 @@ namespace proyecto_lilo.Controllers
 
         public IActionResult Index(string id)
         {
-            Articulo art = sistema.BuscarArticuloPorId(id);
-            if(art is Poster)
-                return Redirect($"/Articulo/Poster/{id}");
-            else if (art is Manga)
-                return Redirect($"/Articulo/Manga/{id}");
-            else if (art is Videojuego)
-                return Redirect($"/Articulo/Videojuego/{id}");
-            else
-                return Redirect($"/Articulo/Consola/{id}");
+            try
+            {
+                Articulo art = sistema.BuscarArticuloPorId(id);
+                if (art is Poster)
+                    return Redirect($"/Articulo/Poster/{id}");
+                else if (art is Manga)
+                    return Redirect($"/Articulo/Manga/{id}");
+                else if (art is Videojuego)
+                    return Redirect($"/Articulo/Videojuego/{id}");
+                else
+                    return Redirect($"/Articulo/Consola/{id}");
+            }catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index","Home");
+            }
+            
         }
 
         public IActionResult Mangas()

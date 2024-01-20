@@ -10,24 +10,18 @@ namespace TiendaDeLilo
     {
         private readonly string _id;
         private List<CantidadArticulo> _articulos;
-        private List<Consola> _consolas;
-        private Usuario _interesado;
-        private List<Poster> _posters;
+        private Usuario? _interesado;
 
         public string Id { get { return _id; }  }
-        public Usuario Interesado { get { return _interesado; } set { _interesado = value; } }
-        public List<CantidadArticulo> Articulos { get { return _articulos; } set { _articulos = value; } }
-        public List<Consola> Consolas { get { return _consolas; } set { _consolas = value; } }
-        public List<Poster> Posters { get { return _posters; } set { _posters = value; } }
+        public Usuario? Interesado { get { return _interesado; } set { _interesado = value; } }
+        public List<CantidadArticulo> Articulos { get { return _articulos; } }
 
         public Carro() { _id = Guid.NewGuid().ToString(); }
 
-        public Carro(Usuario miembro )
+        public Carro(Usuario? miembro)
         {
             _id = Guid.NewGuid().ToString();
-            Articulos = new List<CantidadArticulo>();
-            Consolas = new List<Consola>();
-            Posters = new List<Poster>();
+            _articulos = new List<CantidadArticulo>();
             Interesado = miembro;
         }
 
@@ -37,13 +31,26 @@ namespace TiendaDeLilo
             _articulos.Add(guardar_art);
         }
 
+        public void CambiarCantidad(Articulo art, int stockArt)
+        {
+            int i = 0;
+            while(i < _articulos.Count)
+            {
+                if (_articulos[i].ArticuloElegido.Equals(art))
+                {
+                    _articulos[i].CantidadArtic = stockArt;
+                    return;
+                }
+                i++;
+            }
+            throw new Exception("El articulo no se encuentra en el carro");
+        }
+
 
         public decimal PrecioDelCarro()
         {
             decimal result = 0;
             PrecioFinalArticulos(result);
-            PrecioFinalConsolas(result);
-            PrecioFinalPosters(result);
             return result;
         }
 
@@ -51,25 +58,9 @@ namespace TiendaDeLilo
         {
             foreach (CantidadArticulo art in _articulos)
             {
-
                 result += art.ArticuloElegido.Precio;
             }
         }
 
-        private void PrecioFinalPosters(decimal result)
-        {
-            foreach (Poster poster in _posters)
-            {
-                result += poster.Precio;
-            }
-        }
-
-        private void PrecioFinalConsolas(decimal result)
-        {
-            foreach (Consola consola in _consolas)
-            {
-                result += consola.Precio;
-            }
-        }
     }
 }
