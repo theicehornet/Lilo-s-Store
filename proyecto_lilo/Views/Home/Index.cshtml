@@ -1,11 +1,65 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using TiendaDeLilo;
+@model List<Articulo>
+@{
+    int i = 0;
 }
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    @if (ViewData["Error"] != null)
-    {
-        <p>@ViewData["Error"]</p>
-    }
+    <h1 class="display-4">Bienvenidos a la tienda de Lilo</h1>
+    <p>¡Aquí encontraras los mejores precios de tus mangas, videojuegos y consolas!</p>
 </div>
+<section id="articulos" class="container">
+    <div class="row justify-content-center align-content-center text-center">
+        @foreach (Articulo art in Model)
+        {
+            <article class="col-4 text-start my-5">
+                <h2 class="text-center">@art.Titulo</h2>
+                <figure class="image-article">
+                    <img src="@art.Imagen" alt="imagen de @art.Titulo" class="img-fluid rounded h-100" />
+                </figure>
+                <p>Año de publicación: @art.AñoPublicacion</p>
+                <p>Autor: @art.Autor</p>
+                @if (art is Manga || art is Videojuego)
+                {
+                    <div class="mb-3">
+                        <p class="d-inline">Generos:</p>
+                        @if (art is Manga man)
+                        {
+                            @while (i < man.Generos.Count)
+                            {
+                                if (i == man.Generos.Count - 1)
+                                {
+                                    <p class="d-inline">@man.Generos[i]</p>
+                                }
+                                else
+                                {
+                                    <p class="d-inline">@man.Generos[i],</p>
+                                }
+                                i++;
+                            }
+                            i = 0;
+                        }
+                        else if (art is Videojuego vid)
+                        {
+                            @while (i < vid.Generos.Count)
+                            {
+                                if (i == vid.Generos.Count - 1)
+                                {
+                                    <p class="d-inline">@vid.Generos[i]</p>
+                                }
+                                else
+                                {
+                                    <p class="d-inline">@vid.Generos[i],</p>
+                                }
+                                i++;
+                            }
+                            i = 0;
+                        }
+
+                    </div>
+                }
+                <a class="btn btn-color text-decoration-none" href="/Articulo/Index/@art.Id">Ver más</a>
+            </article>
+        }
+    </div>
+</section>

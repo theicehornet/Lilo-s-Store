@@ -67,9 +67,9 @@ namespace TiendaDeLilo
         {
             return [.. _articulos];
         }
-        public List<Videojuego> ObtenerVideojuegos()
+        public List<Articulo> ObtenerVideojuegos()
         {
-            List<Videojuego> dev = new List<Videojuego>();
+            List<Articulo> dev = new List<Articulo>();
             foreach (Articulo art in _articulos)
             {
                 if (art is Videojuego con)
@@ -77,9 +77,9 @@ namespace TiendaDeLilo
             }
             return dev;
         }
-        public List<Manga> ObtenerMangas()
+        public List<Articulo> ObtenerMangas()
         {
-            List<Manga> dev = new List<Manga>();
+            List<Articulo> dev = new List<Articulo>();
             foreach (Articulo art in _articulos)
             {
                 if (art is Manga con)
@@ -87,9 +87,9 @@ namespace TiendaDeLilo
             }
             return dev;
         }
-        public List<Consola> ObtenerConsolas()
+        public List<Articulo> ObtenerConsolas()
         {
-            List<Consola> dev = new List<Consola>();
+            List<Articulo> dev = new List<Articulo>();
             foreach(Articulo art in _articulos)
             {
                 if (art is Consola con)
@@ -97,9 +97,9 @@ namespace TiendaDeLilo
             }
             return dev;
         }
-        public List<Poster> ObtenerPosters()
+        public List<Articulo> ObtenerPosters()
         {
-            List<Poster> dev = new List<Poster>();
+            List<Articulo> dev = new List<Articulo>();
             foreach (Articulo art in _articulos)
             {
                 if (art is Poster pos)
@@ -230,33 +230,33 @@ namespace TiendaDeLilo
             throw new Exception($"Articulo no encontrado! el id de busqueda es: {id}");
         }
 
-        public Manga BuscarMangaPorId(string id)
+        public Articulo BuscarMangaPorId(string id)
         {
             Articulo art = BuscarArticuloPorId(id);
             if (art is not Manga)
                 throw new Exception("El id buscado no corresponde a un manga");
-            return (Manga)art;
+            return art;
         }
-        public Videojuego BuscarVidejuegoPorId(string id)
+        public Articulo BuscarVidejuegoPorId(string id)
         {
             Articulo art = BuscarArticuloPorId(id);
             if (art is not Videojuego)
                 throw new Exception("El id buscado no corresponde a un videojuego");
-            return (Videojuego)art;
+            return art;
         }
-        public Poster BuscarPosterPorId(string id)
+        public Articulo BuscarPosterPorId(string id)
         {
             Articulo art = BuscarArticuloPorId(id);
             if (art is not Poster)
                 throw new Exception("El id buscado no corresponde a un poster");
-            return (Poster)art;
+            return art;
         }
-        public Consola BuscarConsolaPorId(string id)
+        public Articulo BuscarConsolaPorId(string id)
         {
             Articulo art = BuscarArticuloPorId(id);
             if (art is not Consola)
                 throw new Exception("El id buscado no corresponde a un consola");
-            return (Consola)art;
+            return art;
         }
 
         #endregion
@@ -300,10 +300,10 @@ namespace TiendaDeLilo
             AltaArticulo(m1);
             AltaArticulo(m2);
             AltaArticulo(m3);
-            AltaArticulo(new Poster("Wanted Luffy", "Oda", 1999, 210m, 30, "https://http2.mlstatic.com/D_NQ_NP_950040-MLU71567421573_092023-O.webp","Poster de luffy",true));
-            AltaArticulo(new Poster("Wanted Trafalgar","Oda", 1999, 210m, 30, "https://otakucollectives.com/cdn/shop/files/TrafalgarLawwantedposter.jpg?v=1690947333","Poster de trafalgar",true));
+            AltaArticulo(new Poster("Wanted Luffy Poster", "Oda", 1999, 210m, 30, "https://http2.mlstatic.com/D_NQ_NP_950040-MLU71567421573_092023-O.webp","Poster de luffy",true));
+            AltaArticulo(new Poster("Wanted Trafalgar Poster","Oda", 1999, 210m, 30, "https://otakucollectives.com/cdn/shop/files/TrafalgarLawwantedposter.jpg?v=1690947333","Poster de trafalgar",true));
             AltaArticulo(new Poster("Ai Poster", "Aka Akasaka", 2020, 250m, 50, "https://akibamarket.com/wp-content/uploads/2023/05/OSHI-NO-KO.jpg","Poster de Ai", true));
-            AltaArticulo(new Poster("Jujutsu Kaisen", "Gege Akutami", 2018, 250m, 80, "https://i.ebayimg.com/images/g/igYAAOSwuvBhHCUR/s-l1600.jpg","Poster de la serie Jujutsu Kaisen", true));
+            AltaArticulo(new Poster("Jujutsu Kaisen Poster", "Gege Akutami", 2018, 250m, 80, "https://i.ebayimg.com/images/g/igYAAOSwuvBhHCUR/s-l1600.jpg","Poster de la serie Jujutsu Kaisen", true));
         }
         #endregion
 

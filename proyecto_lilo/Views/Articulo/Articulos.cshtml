@@ -1,18 +1,18 @@
 ﻿@using TiendaDeLilo
-@model List<Manga>; 
+@model List<Articulo>
 @{
     int i = 0;
 }
 <section id="articulos" class="container">
     <div class="row justify-content-center align-content-center text-center">
         <div>
-            <h1>Mangas</h1>
+            <h1>@ViewData["Title"]</h1>
         </div>
         @if (TempData["Error"] != null)
         {
             <p>@TempData["Error"]</p>
         }
-        @foreach(Manga art in Model)
+        @foreach (Articulo art in Model)
         {
             <article class="col-4 text-start my-5">
                 <h2 class="text-center">@art.Titulo</h2>
@@ -21,25 +21,46 @@
                 </figure>
                 <p>Año de publicación: @art.AñoPublicacion</p>
                 <p>Autor: @art.Autor</p>
-                <div class="mb-3">
-                    <p class="d-inline">Generos:</p>
-                    @while (i < art.Generos.Count)
-                    {
-                        if (i == art.Generos.Count - 1)
+                @if (art is Manga || art is Videojuego)
+                {
+                    <div class="mb-3">
+                        <p class="d-inline">Generos:</p>
+                        @if (art is Manga man)
                         {
-                            <p class="d-inline">@art.Generos[i]</p>
+                            @while (i < man.Generos.Count)
+                            {
+                                if (i == man.Generos.Count - 1)
+                                {
+                                    <p class="d-inline">@man.Generos[i]</p>
+                                }
+                                else
+                                {
+                                    <p class="d-inline">@man.Generos[i],</p>
+                                }
+                                i++;
+                            }
+                            i = 0;
                         }
-                        else
+                        else if (art is Videojuego vid)
                         {
-                            <p class="d-inline">@art.Generos[i],</p>
+                            @while (i < vid.Generos.Count)
+                            {
+                                if (i == vid.Generos.Count - 1)
+                                {
+                                    <p class="d-inline">@vid.Generos[i]</p>
+                                }
+                                else
+                                {
+                                    <p class="d-inline">@vid.Generos[i],</p>
+                                }
+                                i++;
+                            }
+                            i = 0;
                         }
-                        i++;
-                    }
-                    @{
-                        i = 0;
-                    }
-                </div>
-                <a class="btn btn-color text-decoration-none" href="/Articulo/Manga/@art.Id">Ver más</a>
+                        
+                    </div>
+                }
+                <a class="btn btn-color text-decoration-none" href="/Articulo/Index/@art.Id">Ver más</a>
             </article>
         }
     </div>
@@ -47,22 +68,18 @@
         <article class="col-6 mt-5">
             <h2>¿No esta lo que buscas?</h2>
             <p>Llena el formulario y lo obtendremos tan pronto como podamos</p>
-            <form method="post" action="ArticuloPeticion" class="text-start border border-dark rounded mb-3 p-3">
+            <form method="post" action="#" class="text-start border border-dark rounded mb-3 p-3">
 
-                <div class="p-1">
+                <div class="p-1 my-2">
                     <label for="articulo" class="form-label">Nombre del articulo:</label>
                     <input type="text" id="articulo" name="name_art" class="form-control" placeholder="Ejemplo: Halo Infinite" />
                 </div>
-                <div class="p-1">
+                <div class="p-1 my-2">
                     <label for="autor" class="form-label">Autor:</label>
                     <input type="text" id="autor" name="name_autor" class="form-control" placeholder="Ejemplo: Microsoft" />
                 </div>
                 <div class="visually-hidden">
                     <input type="hidden" value="@Context.Session.GetString("Correo")" name="autor_peticion" />
-                </div>
-                <div class="p-1 my-2">
-                    <label for="manga" class="form-check-label">¿Es un manga?</label>
-                    <input type="checkbox" check="true" id="manga" name="manga" class="form-check-input" />
                 </div>
                 <div class="p-1">
                     <button type="submit" class="btn btn-color w-100">Enviar</button>

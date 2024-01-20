@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TiendaDeLilo;
 
 namespace proyecto_lilo.Controllers
@@ -6,29 +7,43 @@ namespace proyecto_lilo.Controllers
     public class ArticuloController : Controller
     {
         TiendaDeLilo.System sistema = TiendaDeLilo.System.Instancia;
+
+        public IActionResult Index(string id)
+        {
+            Articulo art = sistema.BuscarArticuloPorId(id);
+            if(art is Poster)
+                return Redirect($"/Articulo/Poster/{id}");
+            else if (art is Manga)
+                return Redirect($"/Articulo/Manga/{id}");
+            else if (art is Videojuego)
+                return Redirect($"/Articulo/Videojuego/{id}");
+            else
+                return Redirect($"/Articulo/Consola/{id}");
+        }
+
         public IActionResult Mangas()
         {
             ViewData["Title"] = "Mangas";
-            List<Manga> mangas = sistema.ObtenerMangas();
-            return View(mangas);
+            List<Articulo> mangas = sistema.ObtenerMangas();
+            return View("Articulos",mangas);
         }
         public IActionResult Consolas()
         {
             ViewData["Title"] = "Consolas";
-            List<Consola> consolas = sistema.ObtenerConsolas();
-            return View(consolas);
+            List<Articulo> consolas = sistema.ObtenerConsolas();
+            return View("Articulos",consolas);
         }
         public IActionResult Videojuegos()
         {
             ViewData["Title"] = "Videojuegos";
-            List<Videojuego> videojuegos = sistema.ObtenerVideojuegos();
-            return View(videojuegos);
+            List<Articulo> videojuegos = sistema.ObtenerVideojuegos();
+            return View("Articulos",videojuegos);
         }
         public IActionResult Posters()
         {
             ViewData["Title"] = "Posters";
-            List<Poster> posters = sistema.ObtenerPosters();
-            return View(posters);
+            List<Articulo> posters = sistema.ObtenerPosters();
+            return View("Articulos",posters);
         }
 
         
@@ -36,9 +51,9 @@ namespace proyecto_lilo.Controllers
         {
             try
             {
-                Manga articulo = sistema.BuscarMangaPorId(id);
+                Articulo articulo = sistema.BuscarMangaPorId(id);
                 ViewData["Title"] = articulo.Titulo;
-                return View(articulo);
+                return View("Articulo",articulo);
             }
             catch (Exception ex)
             {
@@ -50,23 +65,23 @@ namespace proyecto_lilo.Controllers
         {
             try
             {
-                Consola articulo = sistema.BuscarConsolaPorId(id);
+                Articulo articulo = sistema.BuscarConsolaPorId(id);
                 ViewData["Title"] = articulo.Titulo;
-                return View(articulo);
+                return View("Articulo",articulo);
             }
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return RedirectToAction("Consola");
+                return RedirectToAction("Consolas");
             }
         }
         public IActionResult Videojuego(string id)
         {
             try
             {
-                Videojuego articulo = sistema.BuscarVidejuegoPorId(id);
+                Articulo articulo = sistema.BuscarVidejuegoPorId(id);
                 ViewData["Title"] = articulo.Titulo;
-                return View(articulo);
+                return View("Articulo", articulo);
             }
             catch (Exception ex)
             {
@@ -78,9 +93,9 @@ namespace proyecto_lilo.Controllers
         {
             try
             {
-                Poster articulo = sistema.BuscarPosterPorId(id);
+                Articulo articulo = sistema.BuscarPosterPorId(id);
                 ViewData["Title"] = articulo.Titulo;
-                return View(articulo);
+                return View("Articulo",articulo);
             }
             catch (Exception ex)
             {

@@ -18,8 +18,9 @@ namespace proyecto_lilo.Controllers
 
         public IActionResult Index()
         {
+            List<Articulo> art = sistema.ObtenerArticulos();
             ViewData["Title"] = "Bienvenido";
-            return View();
+            return View(art);
         }
     }
 }
